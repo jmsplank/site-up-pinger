@@ -64,8 +64,10 @@ if __name__ == "__main__":
     while still_down:
         print(f"Pinging {conf.url}")
         still_down = not check_site(conf=conf)
-        if still_down:
-            print(f"{dt.now():%Y-%m-%d %H:%M:%S}\tSite is not up")
-        else:
+        if not still_down:
             print(f"{dt.now():%Y-%m-%d %H:%M:%S}\t{conf.url} is up!")
-        time.sleep(5)
+            continue
+
+        print(f"{dt.now():%Y-%m-%d %H:%M:%S}\tSite is not up")
+        print(f"{dt.now():%Y-%m-%d %H:%M:%S}\tWaiting {conf.interval_minutes} minutes")
+        time.sleep(conf.interval_minutes * 60)
